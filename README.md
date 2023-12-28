@@ -1,7 +1,6 @@
 # Overview
 
-Python script to stream data from vicon nexus to unity
-
+Python script to stream data from vicon nexus to unity. See [vicon-nexus-unity-stream](https://github.com/ovi-lab/vicon-nexus-unity-stream) for the accompanying unity package.
 
 # Setup
 
