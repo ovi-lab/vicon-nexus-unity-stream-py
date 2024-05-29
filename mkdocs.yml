@@ -1,9 +1,9 @@
-site_name: vicon_nexus_unity_stream_py
-site_description: Python script to stream data from vicon nexus to unity
-site_author: Ahmed Shariff
+site_name: ViNexPy
+site_description: Sample project generated from Jace's Python Template.
+site_author: Omang
 
-repo_url: https://github.com/ahmed-shariff/vicon_nexus_unity_stream_py
-edit_uri: https://github.com/ahmed-shariff/vicon_nexus_unity_stream_py/edit/master/docs
+repo_url: https://github.com/omangbaheti/https://github.com/omangbaheti/vicon-nexus-unity-stream-py?tab=readme-ov-file
+edit_uri: https://github.com/omangbaheti/https://github.com/omangbaheti/vicon-nexus-unity-stream-py?tab=readme-ov-file/edit/main/docs
 
 theme: readthedocs
 
@@ -15,5 +15,5 @@ nav:
   - Advanced: advanced.md
   - About:
     - Release Notes: about/changelog.md
-    - Contributing: about/contributing.md
+    - Contributor Guide: about/contributing.md
     - License: about/license.md

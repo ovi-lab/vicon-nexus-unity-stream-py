@@ -1,18 +1,18 @@
 [tool.poetry]
 
-name = "vicon_nexus_unity_stream_py"
-version = "0.2.1"
-description = "Python script to stream data from vicon nexus to unity"
+name = "ViNexPy"
+version = "0.0"
+description = "Yes"
+
+packages = [{ include = "ViNexPy" }]
 
 license = "MIT"
-
-authors = ["Ahmed Shariff <shariff.mfa@outlook.com>"]
+authors = ["Omang <omangbaheti@gmail.com>"]
 
 readme = "README.md"
-
-homepage = "https://pypi.org/project/vicon_nexus_unity_stream_py"
-documentation = "https://vicon_nexus_unity_stream_py.readthedocs.io"
-repository = "https://github.com/ahmed-shariff/vicon_nexus_unity_stream_py"
+homepage = "https://pypi.org/project/ViNexPy"
+documentation = "https://ViNexPy.readthedocs.io"
+repository = "https://github.com/omangbaheti/https://github.com/omangbaheti/vicon-nexus-unity-stream-py"
 
 keywords = [
 ]
@@ -25,45 +25,43 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.8",
 ]
-include = ["vicon_nexus_unity_stream_py/static/index.html"]
 
 [tool.poetry.dependencies]
 
-python = ">=3.8,<4.0"
+python = "^3.8"
 
 # TODO: Remove these and add your library's requirements
-click = "^8.1.3"
-flask_restful = "^0.3.8"
-pandas = "^1.5.1"
-loguru = "^0.5.0"
-Flask-RESTful = "^0.3.9"
-msgpack = "^1.0.4"
-alive-progress = "^2.4.1"
+click = "*"
+minilog = "*"
 
 [tool.poetry.dev-dependencies]
 
 # Formatters
-isort = "4.3.21"
+black = "^22.1"
+tomli = "*" # missing 'black' dependency
+isort = "^5.10"
 
 # Linters
-mypy = "*"
-pydocstyle = "*"
-pylint = { git = "https://github.com/PyCQA/pylint", rev = "e169e83e52fedc6624235d45e8e8737294a0fedf" } # use 2.4.5 when released
+mypy = "^1.0"
+pydocstyle = "^6.1"
+pylint = "~2.15"
+pylint-pytest = "*"
+wrapt = "*" # missing 'pylint' dependency
 
 # Testing
-pytest = ">7.0"
-pytest-cov = "*"
-pytest-describe = { git = "https://github.com/pytest-dev/pytest-describe", rev = "453aa9045b265e313f356f1492d8991c02a6aea6" } # use 2.0 when released
-pytest-expecter = "*"
+pytest = "^8.1"
+pytest-describe = "^2.0"
+pytest-expecter = "^3.0"
 pytest-random = "*"
+pytest-cov = "^4.1"
 freezegun = "*"
 
 # Reports
-coveragespace = "^3.1.1"
+coveragespace = "^6.1"
 
 # Documentation
-mkdocs = ">=1.2.3"
-pygments = "^2.5.2"
+mkdocs = "~1.3"
+pygments = "^2.11.1"
 
 # Tooling
 pyinstaller = "*"
@@ -74,14 +72,42 @@ ipython = "^7.12.0"
 
 [tool.poetry.scripts]
 
-vicon-nexus-stream = "vicon_nexus_unity_stream_py.cli:_main"
+ViNexPy = "ViNexPy.cli:main"
 
 [tool.black]
 
-target-version = ["py36", "py37"]
-skip-string-normalization = true
+quiet = true
+
+[tool.isort]
+
+profile = "black"
+
+[tool.mypy]
+
+ignore_missing_imports = true
+no_implicit_optional = true
+check_untyped_defs = true
+
+cache_dir = ".cache/mypy/"
+
+[tool.pytest.ini_options]
+
+addopts = """
+--strict-markers
+
+-r sxX
+--show-capture=log
+
+--cov-report=html
+--cov-report=term-missing:skip-covered
+--no-cov-on-fail
+"""
+
+cache_dir = ".cache/pytest/"
+
+markers = []
 
 [build-system]
 
-requires = ["poetry>=0.12"]
-build-backend = "poetry.masonry.api"
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
