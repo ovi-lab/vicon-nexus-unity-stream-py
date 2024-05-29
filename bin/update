@@ -2,34 +2,36 @@
 # -*- coding: utf-8 -*-
 
 import os
+from contextlib import suppress
 import importlib
 import tempfile
 import shutil
 import subprocess
 import sys
 
+
 CWD = os.getcwd()
 TMP = tempfile.gettempdir()
 CONFIG = {
-    "full_name": "Ahmed Shariff",
-    "email": "shariff.mfa@outlook.com",
-    "github_username": "ahmed-shariff",
-    "github_repo": "vicon_nexus_unity_stream_py",
-    "default_branch": "master",
-    "project_name": "vicon_nexus_unity_stream_py",
-    "package_name": "vicon_nexus_unity_stream_py",
-    "project_short_description": "Python script to stream data from vicon nexus to unity",
+    "full_name": "Omang",
+    "email": "omangbaheti@gmail.com",
+    "github_username": "omangbaheti",
+    "github_repo": "https://github.com/omangbaheti/vicon-nexus-unity-stream-py?tab=readme-ov-file",
+    "default_branch": "main",
+    "project_name": "ViNexPy",
+    "package_name": "ViNexPy",
+    "project_short_description": "Sample project generated from Jace's Python Template.",
     "python_major_version": 3,
     "python_minor_version": 8,
 }
 
 
-def install(package='cookiecutter'):
+def install(package="cookiecutter"):
     try:
         importlib.import_module(package)
     except ImportError:
         print("Installing cookiecutter")
-        subprocess.check_call([sys.executable, '-m', 'pip', 'install', package])
+        subprocess.check_call([sys.executable, "-m", "pip", "install", package])
 
 
 def run():
@@ -39,7 +41,7 @@ def run():
 
     os.chdir(TMP)
     cookiecutter(
-        'https://github.com/jacebrowning/template-python.git',
+        "https://github.com/jacebrowning/template-python.git",
         no_input=True,
         overwrite_if_exists=True,
         extra_context=CONFIG,
@@ -48,33 +50,31 @@ def run():
 
 def copy():
     for filename in [
-        '.appveyor.yml',
-        '.coveragerc',
-        '.gitattributes',
-        '.gitignore',
-        '.isort.cfg',
-        '.mypy.ini',
-        '.pydocstyle.ini',
-        '.pylint.ini',
-        '.scrutinizer.yml',
-        '.travis.yml',
-        '.verchew.ini',
-        'CONTRIBUTING.md',
-        'Makefile',
-        os.path.join('bin', 'checksum'),
-        os.path.join('bin', 'open'),
-        os.path.join('bin', 'update'),
-        os.path.join('bin', 'verchew'),
-        'pytest.ini',
-        'scent.py',
+        os.path.join("bin", "update"),
+        os.path.join("bin", "checksum"),
+        os.path.join("bin", "open"),
+        os.path.join("bin", "verchew"),
+        ".appveyor.yml",
+        ".coveragerc",
+        ".gitattributes",
+        ".gitignore",
+        ".pydocstyle.ini",
+        ".pylint.ini",
+        ".scrutinizer.yml",
+        ".tool-versions",
+        ".verchew.ini",
+        "CONTRIBUTING.md",
+        "Makefile",
+        "scent.py",
     ]:
-        src = os.path.join(TMP, CONFIG['project_name'], filename)
+        src = os.path.join(TMP, CONFIG["project_name"], filename)
         dst = os.path.join(CWD, filename)
         print("Updating " + filename)
-        shutil.copy(src, dst)
+        with suppress(FileNotFoundError):
+            shutil.copy(src, dst)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     install()
     run()
     copy()
