@@ -247,7 +247,7 @@ class FpsDisplay:
 
 def main(connection=None):
     client = get_client(connection)
-    pool = Pool(processes=60)
+    pool = Pool(processes=8)
     try:
         while client.IsConnected():
             if client.GetFrame():
