@@ -6,6 +6,8 @@ import sys
 import json
 import msgpack
 import pandas as pd
+import os
+from multiprocessing import Pool
 from pathlib import Path
 from datetime import datetime
 
@@ -241,13 +243,17 @@ class FpsDisplay:
         self._bar.__exit__()
         logger.configure()
 
+    
 
 def main(connection=None):
     client = get_client(connection)
+    pool = Pool(processes=60)
     try:
         while client.IsConnected():
             if client.GetFrame():
-                logger.info(get_data(client, 'test'))
+                pool.apply_async(logger.info(get_data(client, 'test')))
+                pool.close()
+                pool.join()
 
     except ViconDataStream.DataStreamException as e:
         logger.error( f'Error: {e}' )
