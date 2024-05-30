@@ -251,10 +251,7 @@ def main(connection=None):
     try:
         while client.IsConnected():
             if client.GetFrame():
-                pool.apply_async(logger.info(get_data(client, 'test')))
-                pool.close()
-                pool.join()
-
+                logger.info(get_data(client, 'test'))
     except ViconDataStream.DataStreamException as e:
         logger.error( f'Error: {e}' )
 
