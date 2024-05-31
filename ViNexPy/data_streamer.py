@@ -1,8 +1,3 @@
-import sys
-import json
-import msgpack
-import os
-from multiprocessing import Pool
 from pathlib import Path
 from datetime import datetime
 from fastapi import FastAPI, WebSocket
@@ -18,37 +13,32 @@ except ImportError:
 
 
 app = FastAPI()
+defaultHost = "0.0.0.0"
+defaultPort = "5001"
 
-def _init_api(connection=None, host="127.0.0.1", port="5000", use_json=False):
+#parameters
+tick_rate = 0.01
+
+def _init_api(connection=None, host=defaultHost, port=defaultPort, use_json=False):
     try:
         global client
-        client = get_client(connection)
+        client = get_vicon_instance(connection)
     except Exception as e:
         print("Failed to connect to client")
         client = None   
 
-    
-@app.websocket("/ws")
-async def websocket_endpoint(websocket: WebSocket):
+
+#Runs every      
+@app.websocket("/marker/{subject_name}")
+async def websocket_endpoint(websocket: WebSocket, subject_name):
     await websocket.accept()
     while True:
-        data = {
-            "message": "Hello, this is a message",
-            "timestamp": "Hello"
-        }
+        data = get_data
         print("Executing")
-        await websocket.send_json(get_data(client, "marker", "right"))
-        await asyncio.sleep(0.001)  
+        await websocket.send_json(get_data(client, "marker", subject_name))
+        await asyncio.sleep(tick_rate)  
 
-
-
-    api.add_resource(ViconMarkerStream, '/<string:data_type>/<string:subject_name>')
-    try:
-        app.run(host=host, port=int(port))
-    finally:
-        pass
-
-def get_client(connection=None):
+def get_vicon_instance(connection=None):
     if connection is None:
         connection = 'localhost:801'
     client = ViconDataStream.Client()
@@ -93,5 +83,5 @@ def get_data(client, data_type, subject_name):
 
 
 if __name__ == "__main__":
-    _init_api('localhost:801', '127.0.0.1', '5000', False)
-    uvicorn.run(app, host="127.0.0.1", port=5000)
+    _init_api('localhost:801', defaultHost, defaultPort, False)
+    uvicorn.run(app, host = defaultHost, port = defaultPort)
