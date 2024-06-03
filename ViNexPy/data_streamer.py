@@ -1,8 +1,7 @@
-from pathlib import Path
-from datetime import datetime
 from fastapi import FastAPI, WebSocket
+from datetime import datetime
+
 import uvicorn
-from fastapi.responses import HTMLResponse
 import asyncio
 
 try:
@@ -13,29 +12,22 @@ except ImportError:
 
 
 app = FastAPI()
-defaultHost = "0.0.0.0"
-defaultPort = "5001"
+defaultHost = '0.0.0.0'
+defaultPort = 5001
 
 #parameters
 tick_rate = 0.01
 
-def _init_api(connection=None, host=defaultHost, port=defaultPort, use_json=False):
-    try:
-        global client
-        client = get_vicon_instance(connection)
-    except Exception as e:
-        print("Failed to connect to client")
-        client = None   
-
-
-#Runs every      
+#Runs every tick rate
 @app.websocket("/marker/{subject_name}")
 async def websocket_endpoint(websocket: WebSocket, subject_name):
     await websocket.accept()
-    while True:
-        data = get_data
-        print("Executing")
-        await websocket.send_json(get_data(client, "marker", subject_name))
+    
+    while client.IsConnected and client.GetFrame():
+        data1 = get_data(client, "marker", "HWD")
+        await websocket.send_json(data1)
+        data = get_data(client, "marker", "right")
+        await websocket.send_json(data)
         await asyncio.sleep(tick_rate)  
 
 def get_vicon_instance(connection=None):
@@ -43,29 +35,27 @@ def get_vicon_instance(connection=None):
         connection = 'localhost:801'
     client = ViconDataStream.Client()
 
-    print('Connecting...')
     while not client.IsConnected():
         client.Connect(connection)
-    print('Connected to vicon data stream')
+    client.SetStreamMode(ViconDataStream.Client.StreamMode.EClientPull)
     client.EnableSegmentData()
     client.EnableMarkerData()
-    logger.info(client.GetAxisMapping())
+    client.GetAxisMapping()
     return client
 
-def get_data(client, data_type, subject_name):
+def get_data(client: ViconDataStream.Client, data_type, subject_name):
     data = {}
-    # logger.info(*[n for n in client.__dir__() if "G" in n], sep="\n")
-    # slogger.info(client.GetSegmentNames(subject_name))
+
     if data_type == "marker":
         marker_segment_data = {}
         marker_data = {}
+        print(client.GetLatencyTotal(), subject_name, client.GetFrameNumber())
         for marker, segment in client.GetMarkerNames(subject_name):
             try:
                 marker_segment_data[segment].append(marker)
             except KeyError:
                 marker_segment_data[segment] = [marker]
             marker_data[marker] = client.GetMarkerGlobalTranslation(subject_name, marker)[0]
-            # logger.info(client.GetMarkerGlobalTranslation(subject_name, marker))
         data['data'] = marker_data
         data['hierachy'] = marker_segment_data
         
@@ -83,5 +73,7 @@ def get_data(client, data_type, subject_name):
 
 
 if __name__ == "__main__":
-    _init_api('localhost:801', defaultHost, defaultPort, False)
+    #_init_api('localhost:801', defaultHost, defaultPort, False)
+    client = get_vicon_instance()
+    
     uvicorn.run(app, host = defaultHost, port = defaultPort)
