@@ -16,7 +16,7 @@ defaultHost = '0.0.0.0'
 defaultPort = 5001
 
 #parameters
-tick_rate = 0.01
+tick_rate = 0.01\
 
 #Runs every tick rate
 @app.websocket("/marker/{subject_name}")
