@@ -16,18 +16,16 @@ defaultHost = '0.0.0.0'
 defaultPort = 5001
 
 #parameters
-tick_rate = 0.01\
+tick_rate = 0.01
 
 #Runs every tick rate
-@app.websocket("/marker/{subject_name}")
-async def websocket_endpoint(websocket: WebSocket, subject_name):
+@app.websocket("/marker/")
+async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
-    
     while client.IsConnected and client.GetFrame():
-        data1 = get_data(client, "marker", "HWD")
-        await websocket.send_json(data1)
-        data = get_data(client, "marker", "right")
-        await websocket.send_json(data)
+        data = get_data(client, "marker")
+        for datum in data:
+            await websocket.send_json(data)
         await asyncio.sleep(tick_rate)  
 
 def get_vicon_instance(connection=None):
@@ -37,27 +35,33 @@ def get_vicon_instance(connection=None):
 
     while not client.IsConnected():
         client.Connect(connection)
-    client.SetStreamMode(ViconDataStream.Client.StreamMode.EClientPull)
+    client.SetStreamMode(ViconDataStream.Client.StreamMode.EClientPullPreFetch)
     client.EnableSegmentData()
     client.EnableMarkerData()
     client.GetAxisMapping()
     return client
 
-def get_data(client: ViconDataStream.Client, data_type, subject_name):
+def get_data(client: ViconDataStream.Client, data_type: str):
+    stream = []
     data = {}
-
     if data_type == "marker":
         marker_segment_data = {}
         marker_data = {}
-        print(client.GetLatencyTotal(), subject_name, client.GetFrameNumber())
-        for marker, segment in client.GetMarkerNames(subject_name):
-            try:
-                marker_segment_data[segment].append(marker)
-            except KeyError:
-                marker_segment_data[segment] = [marker]
-            marker_data[marker] = client.GetMarkerGlobalTranslation(subject_name, marker)[0]
-        data['data'] = marker_data
-        data['hierachy'] = marker_segment_data
+        
+        for subject_name,i in enumerate(client.GetSubjectNames()):
+            print(client.GetLatencyTotal(), subject_name, client.GetFrameNumber())
+            for marker, segment in client.GetMarkerNames(subject_name):
+                try:
+                    marker_segment_data[segment].append(marker)
+                except KeyError:
+                    marker_segment_data[segment] = [marker]
+                marker_data[marker] = client.GetMarkerGlobalTranslation(subject_name, marker)[0]
+            data['subject_name'] = subject_name
+            data['data'] = marker_data
+            data['hierachy'] = marker_segment_data
+            stream[i] = data
+            
+
         
     elif data_type == "segment":
         segment_data = {}
@@ -67,7 +71,7 @@ def get_data(client: ViconDataStream.Client, data_type, subject_name):
             segment_data[segment] = translation + rotation
         data['data'] = segment_data
             
-    return data
+    return stream
 
 
 
