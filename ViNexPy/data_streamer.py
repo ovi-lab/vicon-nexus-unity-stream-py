@@ -24,8 +24,8 @@ async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
     while client.IsConnected and client.GetFrame():
         data = get_data(client, "marker")
-        for datum in data:
-            await websocket.send_json(data)
+        #print(data)
+        await websocket.send_json(data)
         await asyncio.sleep(tick_rate)  
 
 def get_vicon_instance(connection=None):
@@ -42,24 +42,24 @@ def get_vicon_instance(connection=None):
     return client
 
 def get_data(client: ViconDataStream.Client, data_type: str):
-    stream = []
-    data = {}
-    if data_type == "marker":
-        marker_segment_data = {}
-        marker_data = {}
         
-        for subject_name,i in enumerate(client.GetSubjectNames()):
-            print(client.GetLatencyTotal(), subject_name, client.GetFrameNumber())
+    if data_type == "marker":
+        
+        stream = {}
+        for subject_name in client.GetSubjectNames():
+            data = {}
+            marker_segment_data = {}
+            marker_data = {}
+            print(f"{subject_name} : {client.GetLatencyTotal()} : {client.GetFrameNumber()}")
             for marker, segment in client.GetMarkerNames(subject_name):
                 try:
                     marker_segment_data[segment].append(marker)
                 except KeyError:
                     marker_segment_data[segment] = [marker]
                 marker_data[marker] = client.GetMarkerGlobalTranslation(subject_name, marker)[0]
-            data['subject_name'] = subject_name
             data['data'] = marker_data
             data['hierachy'] = marker_segment_data
-            stream[i] = data
+            stream[subject_name] = data
             
 
         
