@@ -2,7 +2,7 @@
 
 import click
 
-from vicon_nexus_unity_stream_py._main import start_server, test_connection
+from vicon_nexus_unity_stream_py._main import start_server, test_connection, DEFAULT_HOST, DEFAULT_PORT
 
 
 @click.group()
@@ -19,8 +19,8 @@ def test(connection):
 
 @cli.command()
 @click.option("-c", "--connection", default='localhost:801')
-@click.option("-h", "--host", default='127.0.0.1')
-@click.option("-p", "--port", default='5000')
+@click.option("-h", "--host", default=DEFAULT_HOST)
+@click.option("-p", "--port", default=DEFAULT_PORT, type=int)
 def server(connection, host, port):
     """Connects to the vicon and streams the data out through host:port"""
     start_server(connection=connection, host=host, port=port)
