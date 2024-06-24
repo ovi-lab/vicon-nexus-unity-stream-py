@@ -39,41 +39,21 @@ loguru = ">=0.5.0"
 # Flask-RESTful = ">=0.3.9"
 # msgpack = ">=1.0.4"
 # alive-progress = ">=2.4.1"
+fastapi = "^0.111.0"
 
 [tool.poetry.dev-dependencies]
 
-# Formatters
-isort = "4.3.21"
-
-# Linters
-mypy = "*"
-pydocstyle = "*"
-pylint = { git = "https://github.com/PyCQA/pylint", rev = "e169e83e52fedc6624235d45e8e8737294a0fedf" } # use 2.4.5 when released
-
 # Testing
 pytest = ">7.0"
-pytest-cov = "*"
-pytest-describe = "*"
-pytest-expecter = "*"
-pytest-random = "*"
-freezegun = "*"
-
-# Reports
-coveragespace = "^3.1.1"
 
 # Documentation
 mkdocs = ">=1.2.3"
 pygments = "^2.5.2"
 
-# Tooling
-pyinstaller = "*"
-sniffer = "*"
-MacFSEvents = { version = "*", platform = "darwin" }
-pync = { version = "*", platform = "darwin" }
 
 [tool.poetry.scripts]
 
-vicon-nexus-stream = "vicon_nexus_unity_stream_py.cli:_main"
+vicon-nexus-stream = "vicon_nexus_unity_stream_py.cli:cli"
 
 [tool.black]
 
