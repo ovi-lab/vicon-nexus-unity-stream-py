@@ -13,14 +13,14 @@ import sys
 CWD = os.getcwd()
 TMP = tempfile.gettempdir()
 CONFIG = {
-    "full_name": "Omang",
-    "email": "omangbaheti@gmail.com",
-    "github_username": "omangbaheti",
-    "github_repo": "https://github.com/omangbaheti/vicon-nexus-unity-stream-py?tab=readme-ov-file",
-    "default_branch": "main",
-    "project_name": "ViNexPy",
-    "package_name": "ViNexPy",
-    "project_short_description": "Sample project generated from Jace's Python Template.",
+    "full_name": "Ahmed Shariff",
+    "email": "shariff.mfa@outlook.com",
+    "github_username": "ahmed-shariff",
+    "github_repo": "vicon_nexus_unity_stream_py",
+    "default_branch": "master",
+    "project_name": "vicon_nexus_unity_stream_py",
+    "package_name": "vicon_nexus_unity_stream_py",
+    "project_short_description": "Python script to stream data from vicon nexus to unity",
     "python_major_version": 3,
     "python_minor_version": 8,
 }

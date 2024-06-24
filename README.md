@@ -1,44 +1,45 @@
 # Overview
 
-Sample project generated from Jace's Python Template.
+Python script to stream data from vicon nexus to unity. See [vicon-nexus-unity-stream](https://github.com/ovi-lab/vicon-nexus-unity-stream) for the accompanying unity package.
 
-This project was generated with [cookiecutter](https://github.com/audreyr/cookiecutter) using [jacebrowning/template-python](https://github.com/jacebrowning/template-python).
+# Setup
 
-[![Linux Build](https://img.shields.io/github/actions/workflow/status/omangbaheti/https://github.com/omangbaheti/vicon-nexus-unity-stream-py?tab=readme-ov-file/main.yml?branch=main&label=linux)](https://github.com/omangbaheti/https://github.com/omangbaheti/vicon-nexus-unity-stream-py?tab=readme-ov-file/actions)
-[![Windows Build](https://img.shields.io/appveyor/ci/omangbaheti/https://github.com/omangbaheti/vicon-nexus-unity-stream-py?tab=readme-ov-file/main.svg?label=windows)](https://ci.appveyor.com/project/omangbaheti/https://github.com/omangbaheti/vicon-nexus-unity-stream-py?tab=readme-ov-file)
-[![Code Coverage](https://img.shields.io/codecov/c/github/omangbaheti/https://github.com/omangbaheti/vicon-nexus-unity-stream-py?tab=readme-ov-file)
-](https://codecov.io/gh/omangbaheti/https://github.com/omangbaheti/vicon-nexus-unity-stream-py?tab=readme-ov-file)
-[![Code Quality](https://img.shields.io/scrutinizer/g/omangbaheti/https://github.com/omangbaheti/vicon-nexus-unity-stream-py?tab=readme-ov-file.svg?label=quality)](https://scrutinizer-ci.com/g/omangbaheti/https://github.com/omangbaheti/vicon-nexus-unity-stream-py?tab=readme-ov-file/?branch=main)
-[![PyPI License](https://img.shields.io/pypi/l/ViNexPy.svg)](https://pypi.org/project/ViNexPy)
-[![PyPI Version](https://img.shields.io/pypi/v/ViNexPy.svg?label=version)](https://pypi.org/project/ViNexPy)
-[![PyPI Downloads](https://img.shields.io/pypi/dm/ViNexPy.svg?color=orange)](https://pypistats.org/packages/ViNexPy)
-
-## Setup
-
-### Requirements
+## Requirements
 
 * Python 3.8+
 
-### Installation
+## Installation
 
 Install it directly into an activated virtual environment:
 
 ```text
-$ pip install ViNexPy
+$ pip install vicon_nexus_unity_stream_py
 ```
 
 or add it to your [Poetry](https://poetry.eustace.io/) project:
 
 ```text
-$ poetry add ViNexPy
+$ poetry add vicon_nexus_unity_stream_py
 ```
 
-## Usage
+# Usage
 
-After installation, the package can be imported:
+After installation, the package can be used as a cli tool:
 
 ```text
-$ python
->>> import ViNexPy
->>> ViNexPy.__version__
+$ vicon-nexus-stream --help
+
+Usage: vicon-nexus-stream [OPTIONS] COMMAND [ARGS]...
+
+Options:
+  --help  Show this message and exit.
+
+Commands:
+  server  Connects to the vicon and streams the data...
+  stream  Instead of connecting to vicon, streams data...
+  test    Test if connection is working
 ```
+
+
+# Credits
+This project was generated with [cookiecutter](https://github.com/audreyr/cookiecutter) using [jacebrowning/template-python](https://github.com/jacebrowning/template-python).

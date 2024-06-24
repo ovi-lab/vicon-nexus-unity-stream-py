@@ -1,12 +1,12 @@
 """Sample integration test module using pytest-describe and expecter."""
-# pylint: disable=unused-variable,expression-not-assigned
+# pylint: disable=redefined-outer-name,unused-variable,expression-not-assigned
 
 import pytest
 from expecter import expect
 
 from click.testing import CliRunner
 
-from ViNexPy.cli import main
+from vicon_nexus_unity_stream_py.cli import main
 
 
 @pytest.fixture

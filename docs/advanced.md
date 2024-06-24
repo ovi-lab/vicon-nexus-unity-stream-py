@@ -1,7 +1,5 @@
-# Advanced
+# Feature A
 
-## Feature A
+# Feature B
 
-## Feature B
-
-## Feature C
+# Feature C

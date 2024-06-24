@@ -12,7 +12,7 @@ else:
     notify = Notifier.notify
 
 
-watch_paths = ["ViNexPy", "tests"]
+watch_paths = ["vicon_nexus_unity_stream_py", "tests"]
 
 
 class Options:
