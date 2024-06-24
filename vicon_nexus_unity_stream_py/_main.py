@@ -3,6 +3,7 @@
 """Main script."""
 
 import uvicorn
+import asyncio
 import json
 import pandas as pd
 from pathlib import Path
