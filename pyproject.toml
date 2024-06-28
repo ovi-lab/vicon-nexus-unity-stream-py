@@ -1,18 +1,17 @@
 [tool.poetry]
 
 name = "vicon_nexus_unity_stream_py"
-version = "0.2.1"
+version = "0.3"
 description = "Python script to stream data from vicon nexus to unity"
 
 license = "MIT"
 
-authors = ["Ahmed Shariff <shariff.mfa@outlook.com>"]
-
+authors = ["Ahmed Shariff <shariff.mfa@outlook.com>", "Omang <omangbaheti@gmail.com>"]
 readme = "README.md"
 
 homepage = "https://pypi.org/project/vicon_nexus_unity_stream_py"
 documentation = "https://vicon_nexus_unity_stream_py.readthedocs.io"
-repository = "https://github.com/ahmed-shariff/vicon_nexus_unity_stream_py"
+repository = "https://github.com/ovi-lab/vicon-nexus-unity-stream-py"
 
 keywords = [
 ]
@@ -40,6 +39,7 @@ loguru = ">=0.5.0"
 # msgpack = ">=1.0.4"
 # alive-progress = ">=2.4.1"
 fastapi = "^0.99"
+importlib-metadata = ">=8.0.0"
 
 [tool.poetry.dev-dependencies]
 
