@@ -10,6 +10,7 @@ from pathlib import Path
 from datetime import datetime
 
 from fastapi import FastAPI, WebSocket
+from fastapi.staticfiles import StaticFiles
 from loguru import logger
 
 from vicon_nexus_unity_stream_py._utils import process_return_value, _setup_uvicorn_logger
@@ -23,6 +24,8 @@ except ImportError:
 app = FastAPI()
 app.logger = logger
 app.add_event_handler("startup", _setup_uvicorn_logger)
+
+app.mount("/", StaticFiles(directory="static"), name="static")
 
 CLIENT = None
 DEFAULT_HOST = '0.0.0.0'
